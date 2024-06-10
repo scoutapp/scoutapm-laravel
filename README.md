@@ -53,6 +53,30 @@ $config[\Scoutapm\Config\ConfigKey::LOG_LEVEL] = \Psr\Log\LogLevel::ERROR;
 
 Any of the constants defined in `\Psr\Log\LogLevel` are acceptable values for this configuration option.
 
+### Laravel 11 Error Handling
+
+In Laravel 11, the `App\Exceptions\Handler` approach has been retired, and a new method `withExceptions()` has been
+added in `bootstrap/app.php` when configuring the application. In order for Scout APM Error Handling to pick up
+uncaught exceptions, you should add the appropriate Scout APM call, for example:
+
+```php
+return Application::configure(basePath: dirname(__DIR__))
+    ->withRouting(
+        web: __DIR__.'/../routes/web.php',
+        commands: __DIR__.'/../routes/console.php',
+        health: '/up',
+    )
+    ->withMiddleware(function (Middleware $middleware) {
+        // ...
+    })
+    ->withExceptions(function (Exceptions $exceptions) {
+        // Add the following call to enable uncaught exceptions in Scout APM error reporting:
+        $exceptions->reportable(function (Throwable $e) {
+            app()->make(\Scoutapm\ScoutApmAgent::class)->recordThrowable($e);
+        });
+    })->create();
+```
+
 ## Documentation
 
 For full installation and troubleshooting documentation, visit our [help site](https://docs.scoutapm.com/#laravel).
