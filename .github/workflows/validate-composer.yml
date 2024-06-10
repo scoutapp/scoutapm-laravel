@@ -18,6 +18,7 @@ jobs:
           - "8.*"
           - "9.*"
           - "10.*"
+          - "11.*"
         php-version:
           - "7.2"
           - "7.3"
@@ -27,7 +28,7 @@ jobs:
           - "8.2"
           - "8.3"
         exclude:
-          # See - https://laravel.com/docs/9.x/releases#support-policy
+          # See - https://laravel.com/docs/11.x/releases#support-policy
           # See - https://github.com/laravel/framework/issues/40339
           # Laravel 5.5 supports PHP 7.1 - 7.4
           - {laravel-version: "5.5.*", php-version: "8.0"} # Laravel 5.5.* does not support PHP 8.0+
@@ -51,13 +52,19 @@ jobs:
           - {laravel-version: "9.*", php-version: "7.3"} # Laravel 9 requires 8.0+
           - {laravel-version: "9.*", php-version: "7.4"} # Laravel 9 requires 8.0+
           - {laravel-version: "9.*", php-version: "8.3"} # Laravel 9 does not support PHP 8.3+
-          # Laravel 10 supports PHP 8.1 - 8.2 @todo tbc
+          # Laravel 10 supports PHP 8.1 - 8.3
           - {laravel-version: "10.*", php-version: "7.2"} # Laravel 10 requires 8.1+
           - {laravel-version: "10.*", php-version: "7.3"} # Laravel 10 requires 8.1+
           - {laravel-version: "10.*", php-version: "7.4"} # Laravel 10 requires 8.1+
           - {laravel-version: "10.*", php-version: "8.0"} # Laravel 10 requires 8.1+
+          # Laravel 11 supports PHP 8.2 - 8.3
+          - {laravel-version: "11.*", php-version: "7.2"} # Laravel 11 requires 8.2+
+          - {laravel-version: "11.*", php-version: "7.3"} # Laravel 11 requires 8.2+
+          - {laravel-version: "11.*", php-version: "7.4"} # Laravel 11 requires 8.2+
+          - {laravel-version: "11.*", php-version: "8.0"} # Laravel 11 requires 8.2+
+          - {laravel-version: "11.*", php-version: "8.1"} # Laravel 11 requires 8.2+
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: "Install PHP"
         uses: shivammathur/setup-php@v2
         with:
